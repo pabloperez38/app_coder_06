@@ -1,16 +1,17 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
-import { Platform } from "react-native";
-
 import { MapsScreen, NewPlaceScreen, PlaceDetailScreen, PlaceListScreen } from "../screens/index";
+import { Platform, TouchableOpacity } from "react-native";
+
+import Ionicons from "@expo/vector-icons/Ionicons"
+import React from "react";
 import colors from "../utils/colors";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
 const PlacesNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Place"
+      initialRouteName="Places"
       screenOptions={{
         headerStyle: {
           backgroundColor: Platform.OS === "android" ? colors.primary : colors.secondary,
@@ -20,7 +21,16 @@ const PlacesNavigator = () => {
           fontWeight: "bold",
         },
       }}>
-      <Stack.Screen name="Places" component={PlaceListScreen} options={{ title: "Direcciones" }} />
+      <Stack.Screen
+      name="Places"
+      component={PlaceListScreen}
+      options={({navigation}) => ({
+        title: "Direcciones",
+        headerRight:() =>(
+        <TouchableOpacity onPress={() => navigation.navigate("NewPlace")}>
+          <Ionicons name="add-circle-outline" size={26} />
+      </TouchableOpacity>) 
+    })} />
       <Stack.Screen
         name="PlaceDetail"
         component={PlaceDetailScreen}
