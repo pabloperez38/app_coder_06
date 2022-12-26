@@ -1,24 +1,27 @@
 import { Button, ScrollView, Text, TextInput, View } from "react-native";
 
 import {ImageSelector} from '../../components/';
-import {addPlace} from '../../store/place.slice';
 import colors from '../../utils/colors';
+import {savePlace} from '../../store/place.slice';
 import { styles } from "./styles";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 
 const NewPlace = ({ navigation }) => {
-  const [title, setTitle] = useState("")
+  const [title, setTitle] = useState("");
+  const [image, setImage] = useState(null);
   const dispatch = useDispatch();
   const onHandleSubmit = () => {
-    dispatch(addPlace({title}));
+
+    dispatch(savePlace({title, image}));
     navigation.navigate("Places");
+
   }
   const onHandleChange = (text) => {
     setTitle(text);    
   }
   const onImagePicker = (uri) => {
-    console.warn("uri", uri)
+    setImage(uri);
   }
   return (
     <ScrollView style={styles.container}>
